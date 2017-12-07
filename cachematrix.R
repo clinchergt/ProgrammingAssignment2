@@ -29,10 +29,19 @@ cacheSolve <- function(x, ...) {
     }
 
     tempmatrix <- x$get()
-    tempsolved <- solve(tempmatrix)
-    tempinverse <- tempsolved %*% tempmatrix
-    x$setinv(tempinverse)
+    tempinverse <- NULL
+
+    tryCatch({
+            tempsolved <- solve(tempmatrix)
+            tempinverse <- tempsolved %*% tempmatrix
+            x$setinv(tempinverse)
+        }, error = function(e) {
+        print("Cannot reverse matrix")
+    })
 
     ## Return a matrix that is the inverse of 'x' after calculating it
-    tempinverse
+    if (!is.null(tempinverse))
+        return (tempinverse)
+    
+    invisible(tempinverse)
 }
