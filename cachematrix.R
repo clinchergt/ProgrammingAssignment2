@@ -33,8 +33,7 @@ cacheSolve <- function(x, ...) {
 
     tryCatch({
             tempsolved <- solve(tempmatrix)
-            tempinverse <- tempsolved %*% tempmatrix
-            x$setinv(tempinverse)
+            x$setinv(tempsolved)
         }, error = function(e) {
         print("Cannot reverse matrix")
     })
